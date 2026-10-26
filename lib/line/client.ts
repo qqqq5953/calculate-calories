@@ -4,9 +4,13 @@ import { env } from "@/lib/env";
 let client: messagingApi.MessagingApiClient | undefined;
 let blobClient: messagingApi.MessagingApiBlobClient | undefined;
 
+// 只有測試時設定：把 LINE API 指到假的伺服器
+const baseURL = () => process.env.LINE_API_BASE_URL || undefined;
+
 export function lineClient() {
   client ??= new messagingApi.MessagingApiClient({
     channelAccessToken: env.lineChannelAccessToken(),
+    baseURL: baseURL(),
   });
   return client;
 }
@@ -14,6 +18,7 @@ export function lineClient() {
 export function lineBlobClient() {
   blobClient ??= new messagingApi.MessagingApiBlobClient({
     channelAccessToken: env.lineChannelAccessToken(),
+    baseURL: process.env.LINE_DATA_API_BASE_URL || baseURL(),
   });
   return blobClient;
 }

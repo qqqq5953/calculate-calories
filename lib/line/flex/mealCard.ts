@@ -41,7 +41,9 @@ function macroBar(n: Nutrients): FlexComponent[] {
     layout: "horizontal",
     height: "8px",
     cornerRadius: "4px",
-    backgroundColor: COLORS.track,
+    // 區段之間留 2px 白色間隔，色盲時也分得出邊界
+    spacing: "2px",
+    backgroundColor: n.kcal > 0 ? "#FFFFFF" : COLORS.track,
     margin: "md",
     contents: segments
       .filter(([p]) => p > 0)
@@ -252,7 +254,7 @@ function dayProgress(day: DayProgress): FlexComponent {
     type: "box",
     layout: "vertical",
     contents: [
-      row("今日熱量", day.kcal, day.targetKcal, "kcal", day.kcal > day.targetKcal ? COLORS.warn : COLORS.primary),
+      row("今日熱量", day.kcal, day.targetKcal, "kcal", day.kcal > day.targetKcal ? COLORS.over : COLORS.primary),
       row("今日蛋白質", day.proteinG, day.targetProteinG, "g", COLORS.protein),
     ],
   };
