@@ -1,0 +1,19 @@
+# 本機用 Docker 跑 app。資料庫用 `supabase start`（Supabase CLI 會用 Docker 起本機 Supabase）。
+#   supabase start
+#   docker compose up --build
+# 容器內連本機 Supabase 要用 host.docker.internal，見下方 DATABASE_URL。
+services:
+  app:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_LIFF_ID: ${NEXT_PUBLIC_LIFF_ID:-}
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: ${DOCKER_DATABASE_URL:-postgresql://postgres:postgres@host.docker.internal:54322/postgres}
+      SUPABASE_URL: ${DOCKER_SUPABASE_URL:-http://host.docker.internal:54321}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

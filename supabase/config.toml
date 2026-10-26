@@ -1,0 +1,21 @@
+# Supabase CLI 本機設定（`supabase start` 會用 Docker 起這些服務）。
+# 未列出的設定使用 CLI 預設值。完整選項：https://supabase.com/docs/guides/local-development/cli/config
+project_id = "calculate-calories"
+
+[api]
+port = 54321
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+port = 54323
+
+[storage]
+enabled = true
+
+[storage.buckets.meal-photos]
+public = false
+file_size_limit = "5MiB"
+allowed_mime_types = ["image/jpeg"]
